@@ -1,4 +1,4 @@
-@props(['position'])
+@props(['position', 'status'])
 
 
 <div
@@ -14,11 +14,14 @@
     ])>
     @if($position < 3)
         <x-ui.icons.trophy class="w-[24px] h-[24px]"/>
-    @elseif($position == 3)
-        <x-ui.icons.arrow-up class="w-[24px] h-[24px]"/>
-    @elseif($position == 4)
-        <x-ui.icons.arrow-down class="w-[24px] h-[24px]"/>
     @else
-        <x-ui.icons.minus class="w-[24px] h-[24px]"/>
+        @if ($position == 'up')
+            <x-ui.icons.arrow-up class="w-[24px] h-[24px]"/>
+        @elseif ($position == 'down')
+            <x-ui.icons.arrow-down class="w-[24px] h-[24px]"/>
+        @else            
+            <x-ui.icons.minus class="w-[24px] h-[24px]"/>
+        @endif      
     @endif
+
 </div>
