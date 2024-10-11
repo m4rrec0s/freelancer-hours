@@ -46,7 +46,7 @@ class Create extends Component
             $this->arrangePositions($proposal);
         });
 
-        // $this->project->author->notify(new NewProposal($this->project));
+        $this->project->author->notify(new NewProposal($this->project));
 
         $this->dispatch('proposal::created');
         $this->modal = false;
@@ -61,13 +61,13 @@ class Create extends Component
             ', ['project' => $proposal->project_id]);
         $position = collect($query)->where('id', '=', $proposal->id)->first();
         $otherProposal = collect($query)->where('position', '=', $position->newPosition)->first();
-        // if ($otherProposal) {
-        //     $proposal->update(['position_status' => 'up']);
-        //     $oProposal = Proposal::find($otherProposal->id);
+        if ($otherProposal) {
+            $proposal->update(['position_status' => 'up']);
+            $oProposal = Proposal::find($otherProposal->id);
             
-        //     $oProposal->update(['position_status' => 'down']);
-        //     $oProposal->notify(new PerdeuMane($this->project));
-        // }
+            $oProposal->update(['position_status' => 'down']);
+            $oProposal->notify(new PerdeuMane($this->project));
+        }
         ArrangePositions::run($proposal->project_id);
     }
 
